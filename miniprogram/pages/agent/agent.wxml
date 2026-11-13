@@ -1,0 +1,26 @@
+<view class="page">
+  <view class="eyebrow">YOUR LITTLE REPRESENTATIVE</view><view class="title"><view>先认识你，</view><view>再替你说声你好。</view></view><view class="subtitle">不用写得很精彩，真实就很好。</view>
+  <view wx:if="{{loading}}" class="empty">正在取回你的资料…</view>
+  <view wx:if="{{error}}" class="error">{{error}}<button class="ghost" bindtap="load">重新连接</button></view>
+  <block wx:if="{{!loading}}">
+    <view class="card">
+      <view class="section-title">关于你的一点点</view><text class="label">选一个小小头像</text><view class="avatar-options"><button wx:for="{{avatars}}" wx:key="key" class="avatar-option {{item.selected ? 'selected' : ''}}" data-key="{{item.key}}" bindtap="chooseAvatar" aria-label="选择{{item.label}}头像"><text class="avatar-emoji">{{item.symbol}}</text><text class="avatar-label">{{item.label}}</text></button></view><view class="notice">头像与昵称用于展示，不作为模型推测的资料。</view>
+      <text class="label">昵称</text><input class="input" value="{{profile.nickname}}" data-field="nickname" bindinput="input" maxlength="20" placeholder="希望朋友怎么称呼你"/>
+      <text class="label">年龄段</text><picker class="picker" range="{{ages}}" value="{{ageIndex}}" bindchange="chooseAge">{{ages[ageIndex]}} 岁 <text class="muted">⌄</text></picker>
+      <view class="row"><view class="column"><text class="label">所在城市 · 可选</text><input class="input" value="{{profile.city}}" data-field="city" bindinput="input" maxlength="30" placeholder="例如 杭州"/></view><view class="column"><text class="label">MBTI · 可选</text><input class="input" value="{{profile.mbti}}" data-field="mbti" bindinput="input" maxlength="8" placeholder="例如 INFP"/></view></view>
+      <view class="toggle-row"><view class="column"><view>仅匹配同城朋友</view><view class="small muted">需填写城市，并在下方授权 Agent 使用城市资料。</view></view><switch color="#709169" checked="{{profile.sameCityOnly}}" bindchange="sameCityChange"/></view>
+      <text class="label">你感兴趣的事 · 多选</text><view class="tag-list"><view wx:for="{{interestOptions}}" wx:key="label" class="option {{item.selected ? 'selected' : ''}}" bindtap="toggleTag" data-kind="interests" data-value="{{item.label}}">{{item.label}}</view></view>
+      <text class="label">你通常是什么样子 · 多选</text><view class="tag-list"><view wx:for="{{traitOptions}}" wx:key="label" class="option {{item.selected ? 'selected' : ''}}" bindtap="toggleTag" data-kind="traits" data-value="{{item.label}}">{{item.label}}</view></view>
+      <text class="label">希望认识什么样的朋友</text><textarea class="textarea" value="{{profile.friendshipGoal}}" data-field="friendshipGoal" bindinput="input" maxlength="150" placeholder="比如，能一起分享音乐、不催回复的朋友"/>
+      <text class="label">不喜欢的社交方式或边界</text><textarea class="textarea" value="{{profile.boundaries}}" data-field="boundaries" bindinput="input" maxlength="200" placeholder="比如，不交换联系方式，不喜欢被催回复"/>
+      <text class="label">再说说自己 · 可选</text><textarea class="textarea" value="{{profile.bio}}" data-field="bio" bindinput="input" maxlength="500" placeholder="这段原始介绍仅自己可见，不提供给对方 Agent"/>
+    </view>
+    <view class="card mint"><view class="section-title">Agent 可以使用哪些资料？</view><view class="small muted">仅勾选的内容用于 Agent 交流。昵称作为展示称呼；原始自我介绍、联系方式和精确位置不参与交换。</view>
+      <view wx:for="{{fields}}" wx:key="key" class="toggle-row"><view class="column"><view>{{item.label}}</view><view class="small muted">{{item.hint}}</view></view><switch color="#709169" checked="{{item.selected}}" data-key="{{item.key}}" bindchange="consentChange"/></view>
+      <view class="notice">修改或撤回授权可能结束已有匹配。暂停匹配、隐私与删除入口始终免费。</view>
+    </view>
+    <view class="toggle-row"><view class="column small">我已年满 18 岁，并同意按以上范围使用资料创建 Agent。</view><switch color="#709169" checked="{{adultConfirmed}}" bindchange="adultChange"/></view>
+    <view wx:if="{{defaultModeLabel === 'AI 模型模拟'}}" class="notice">所选授权资料会发送给生成与后台质检模型服务；质检过程不展示。</view>
+    <button class="primary" bindtap="save" loading="{{busy}}" disabled="{{busy}}">{{busy ? '正在生成 Agent，请稍候…' : '保存，准备慢慢认识世界'}}</button><view class="notice">当前默认 {{defaultModeLabel}}，完成后按实际生成方式标记。</view>
+  </block>
+</view>

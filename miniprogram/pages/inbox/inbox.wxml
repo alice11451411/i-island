@@ -1,0 +1,31 @@
+<view class="page {{selected ? 'chat-page' : ''}}">
+  <block wx:if="{{!selected}}">
+    <view class="brand"><view class="brand-name">{{section === 'me' ? '我的小岛生活' : '消息，慢慢回。'}}</view><text wx:if="{{demoMode}}" class="demo">本地演示</text></view>
+    <view class="subtitle">{{section === 'me' ? '你的资料与节奏，由你自己掌握。' : '不用马上回复，舒服的连接值得等待。'}}</view>
+    <view class="tabs"><button class="{{section === 'messages' ? 'active' : ''}}" bindtap="changeSection" data-section="messages">我的消息</button><button class="{{section === 'me' ? 'active' : ''}}" bindtap="changeSection" data-section="me">我的与隐私</button></view>
+    <view wx:if="{{loading}}" class="empty">正在取回小岛近况…</view>
+    <view wx:if="{{error}}" class="error">{{error}}<button class="ghost" bindtap="load">重试</button></view>
+    <block wx:if="{{section === 'messages' &amp;&amp; !loading}}">
+      <view wx:if="{{!matches.length}}" class="card empty"><view class="empty-icon">☏</view><view>第一声你好，还在路上。</view><view class="small">让 Agent 去交朋友，双方愿意后就能聊天。</view><navigator class="link" open-type="reLaunch" url="/pages/home/home">回小岛看看 ›</navigator></view>
+      <view wx:for="{{matches}}" wx:key="id" class="card match-item" data-id="{{item.id}}" bindtap="selectMatch"><view class="flex"><view class="avatar peach">{{item.other.avatarSymbol}}</view><view class="column"><view class="row"><view class="section-title">{{item.other.nickname}}</view><text class="small muted">›</text></view><view class="small muted">{{item.status === 'connected' ? '真人聊天已开启，轻轻说声你好吧' : item.statusText}}</view></view></view><view class="tag-list"><text class="tag" wx:for="{{item.other.interests}}" wx:for-item="interest" wx:key="*this">{{interest}}</text></view></view>
+      <view wx:if="{{demoMode}}" class="notice">演示不会伪造对方同意或回复。请到“我的”切换虚构身份，分别表达意向与发送消息。</view>
+    </block>
+    <block wx:if="{{section === 'me' &amp;&amp; me}}">
+      <view class="card mint"><view class="flex"><view class="avatar">{{ownAvatar}}</view><view><view class="section-title">{{me.profile.nickname || '还没有取昵称'}}</view><view class="small muted">{{me.agent.name || '准备创建你的 Agent'}} · {{agentModeLabel}}</view></view></view><view wx:if="{{demoMode}}" class="notice">当前是 {{personaLabel}} · 虚构演示身份</view><button class="secondary edit-button" bindtap="editAgent">编辑 Agent 与资料授权</button></view>
+      <view class="card"><view class="menu-item" bindtap="toggleMatching"><view><view>自动匹配</view><view class="small muted">{{me.matchingEnabled ? 'Agent 可以参与新的相遇' : '已暂停，Agent 正在休息'}}</view></view><text class="pill">{{me.matchingEnabled ? '暂停' : '开启'}}</text></view><view class="menu-item" bindtap="privacy"><view>隐私与资料使用说明</view><text class="muted">›</text></view><view wx:if="{{demoMode}}" class="menu-item" bindtap="switchPersona"><view><view>切换演示身份</view><view class="small muted">用于验证双方自主同意和真人聊天</view></view><text class="muted">›</text></view><view class="menu-item delete-item" bindtap="deleteAccount"><view>删除账号与个人数据</view><text>›</text></view></view>
+      <view class="footer-note">基础聊天、隐私与安全功能始终免费。</view>
+    </block>
+    <island-nav active="{{section === 'me' ? 'me' : 'messages'}}"/>
+  </block>
+  <block wx:else>
+    <view class="chat-head"><button class="link back" bindtap="closeChat">‹ 返回</button><view class="chat-name"><view>{{selected.other.avatarSymbol}} {{selected.other.nickname}}</view><view class="small muted">双方已同意 · 真人聊天</view></view><button class="link" bindtap="chatMenu" disabled="{{busy}}">•••</button></view>
+    <view wx:if="{{demoMode}}" class="chat-demo">虚构用户演示 · 回复需手动切换身份发送</view>
+    <view wx:if="{{error}}" class="error">{{error}}<button class="ghost" bindtap="load">重新检查联系状态</button></view>
+    <scroll-view class="message-scroll" scroll-y scroll-into-view="{{scrollId}}" scroll-with-animation>
+      <view wx:if="{{!messages.length}}" class="empty chat-empty"><view class="empty-icon">♧</view><view>你们都选择了认识彼此。</view><view class="small">从一个小小的共同话题开始吧。</view></view>
+      <view wx:for="{{messages}}" wx:key="id" id="message-{{item.id}}" class="message {{item.mine ? 'mine' : ''}}"><view class="message-text prewrap">{{item.text}}</view><view class="message-time">{{item.time}}</view></view>
+      <view class="scroll-spacer"></view>
+    </scroll-view>
+    <view wx:if="{{selected.status === 'connected'}}" class="composer"><view wx:if="{{suggestions.length}}" class="suggestions"><view class="small muted">点选只会填入输入框，由你决定发送。</view><view wx:for="{{suggestions}}" wx:key="*this" class="suggestion" bindtap="chooseSuggestion" data-text="{{item}}">{{item}}</view></view><view class="composer-tools"><button class="link" bindtap="icebreaker" disabled="{{busy}}">✧ 找点破冰灵感</button><button class="link" bindtap="emoji" disabled="{{busy}}">☺ 表情</button></view><view class="composer-row"><input class="input draft" placeholder="不着急，慢慢说…" value="{{draft}}" bindinput="inputDraft" maxlength="1000" disabled="{{busy}}" confirm-type="send" bindconfirm="send"/><button class="primary send" bindtap="send" loading="{{busy}}" disabled="{{busy || !draft}}">发送</button></view></view>
+  </block>
+</view>

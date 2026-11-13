@@ -1,0 +1,7 @@
+.env
+data/
+test-data/
+node_modules/
+*.log
+project.private.config.json
+dist/

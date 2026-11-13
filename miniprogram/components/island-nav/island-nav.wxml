@@ -1,0 +1,5 @@
+<view class="nav">
+  <navigator class="item {{active === 'home' ? 'active' : ''}}" open-type="reLaunch" url="/pages/home/home"><text class="icon">⌂</text><text>我的小岛</text></navigator>
+  <navigator class="item {{active === 'messages' ? 'active' : ''}}" open-type="reLaunch" url="/pages/inbox/inbox"><text class="icon">☏</text><text>消息</text></navigator>
+  <navigator class="item {{active === 'me' ? 'active' : ''}}" open-type="reLaunch" url="/pages/inbox/inbox?section=me"><text class="icon">♧</text><text>我的</text></navigator>
+</view>

@@ -1,0 +1,13 @@
+{
+  "provider": "local mock, no external request",
+  "passed": 5,
+  "results": [
+    "Model configuration does not relabel existing rule-generated Agent",
+    "Agent form reaches model adapter and persists selected avatar",
+    "Model-generated three-round report uses only selected authorized fields",
+    "Rejected model output keeps unsaved form and never falls back to rules",
+    "Browser receives no model credential and no uncaught exceptions"
+  ],
+  "errors": [],
+  "checkedAt": "2026-10-31T12:20:12.917Z"
+}

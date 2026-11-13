@@ -1,0 +1,18 @@
+{
+  "name": "i-island",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "I岛 — 让Agent陪你迈出社交第一步",
+  "engines": {
+    "node": ">=24.0.0"
+  },
+  "scripts": {
+    "build:demo": "node scripts/build-demo.mjs",
+    "start": "node --env-file-if-exists=.env server/index.mjs",
+    "test": "node --test test/*.test.mjs miniprogram/tests/client.test.cjs",
+    "check": "node scripts/check.mjs",
+    "metrics": "node --env-file-if-exists=.env scripts/metrics.mjs",
+    "reports": "node --env-file-if-exists=.env scripts/reports.mjs"
+  }
+}

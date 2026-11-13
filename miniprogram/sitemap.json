@@ -1,0 +1,1 @@
+{ "desc": "个人资料与匹配仅登录后可见，不参与索引", "rules": [{ "action": "disallow", "page": "*" }] }

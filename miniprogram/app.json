@@ -1,0 +1,7 @@
+{
+  "pages": ["pages/home/home", "pages/agent/agent", "pages/encounter/encounter", "pages/report/report", "pages/inbox/inbox"],
+  "window": { "navigationBarTitleText": "I岛", "navigationBarBackgroundColor": "#f7f8f2", "navigationBarTextStyle": "black", "backgroundColor": "#f7f8f2", "backgroundTextStyle": "dark" },
+  "usingComponents": { "island-nav": "/components/island-nav/island-nav" },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

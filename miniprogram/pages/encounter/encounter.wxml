@@ -1,0 +1,15 @@
+<view class="page">
+  <view class="eyebrow">A CONVERSATION BEFORE HELLO</view><view class="title">他们先聊了一会儿。</view><view class="subtitle"><view>这是 Agent 的模拟交流，</view><view>不代表双方真人说过的话。</view></view>
+  <view wx:if="{{loading}}" class="empty">正在整理 Agent 的交流…</view>
+  <view wx:if="{{error}}" class="error">{{error}}<button class="ghost" bindtap="load">重试</button></view>
+  <view wx:if="{{!loading &amp;&amp; !match &amp;&amp; !error}}" class="card empty"><view class="empty-icon">♧</view><view>还没有开始的相遇</view><view class="small">准备好后，让 Agent 出去认识朋友吧。</view><button class="secondary" bindtap="home">回我的小岛</button></view>
+  <block wx:if="{{match}}">
+    <view class="card mint conversation-head"><view class="flex"><view class="avatar">{{ownAvatar}}</view><text class="muted">↔</text><view class="avatar peach">{{match.other.avatarSymbol}}</view></view><view class="section-title">你的 Agent 与 {{match.other.nickname}} 的 Agent</view><view class="small muted">{{match.modeLabel}} · 最多 3 轮往返</view></view>
+    <view wx:if="{{!match.transcript.length}}" class="card empty">这段匹配已结束，交流资料已撤回。</view>
+    <view class="conversation">
+      <view wx:for="{{match.transcript}}" wx:key="index" class="turn {{item.speaker === 'self' ? 'self' : 'other'}}"><view class="speaker">{{item.speaker === 'self' ? '你的 Agent' : match.other.nickname + ' 的 Agent'}} <text>· 第 {{item.round}} 轮</text></view><view class="bubble prewrap">{{item.text}}</view></view>
+    </view>
+    <view class="notice center">以上仅依据双方授权资料模拟，不包含真人承诺。</view>
+    <button class="primary" bindtap="report">看看这次相遇的缘分报告  ↗</button>
+  </block>
+</view>

@@ -1,0 +1,16 @@
+{
+  "passed": 7,
+  "results": [
+    "Generation failure preserves the enabled matching state and recovers controls",
+    "Pending generation remains visible across navigation and duplicate actions are disabled",
+    "Completed generation stays on the user-selected page with an optional report link",
+    "Report opens directly while the full Agent transcript remains optional",
+    "390px report layout has no horizontal overflow",
+    "Normal matching success navigates straight to the report",
+    "No uncaught browser errors"
+  ],
+  "errors": [],
+  "checkedAt": "2026-11-01T08:47:21.452Z",
+  "mode": "rules",
+  "storage": "isolated in-memory database"
+}

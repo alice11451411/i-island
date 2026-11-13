@@ -1,0 +1,20 @@
+{
+  "passed": 13,
+  "results": [
+    "Desktop home renders",
+    "Mobile home has no horizontal overflow",
+    "Explicit match consent and three-round transcript",
+    "One-sided consent does not unlock chat",
+    "Manual second-person consent connects match",
+    "Icebreaker is draft-only; explicit send creates message",
+    "Delayed old-persona response cannot overwrite current identity",
+    "Other persona receives message; mobile chat fits",
+    "Consent data update closes old match and clears report",
+    "Blank persona starts with Agent creation",
+    "New user saves an avatar and authorized same-city preference",
+    "Newly created Agent can match and decline without opening chat",
+    "Account deletion clears the client session"
+  ],
+  "errors": [],
+  "checkedAt": "2026-10-31T12:20:08.966Z"
+}

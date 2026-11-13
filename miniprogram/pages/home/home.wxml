@@ -1,0 +1,28 @@
+<view class="page">
+  <view class="brand"><text class="brand-name">I岛 <text class="brand-leaf">♧</text></text><text wx:if="{{demoMode}}" class="demo">本地演示 · 虚构用户</text><text wx:else class="eyebrow">慢慢认识</text></view>
+  <view class="hero">
+    <view class="eyebrow">A LITTLE ISLAND FOR YOU</view>
+    <view class="title"><view class="title-line title-line-a">让相遇，</view><view class="title-line title-line-b">慢慢发生。</view></view>
+    <view class="subtitle"><view>不知道怎么开口？</view><view>让你的 Agent 先认识 TA。</view></view>
+    <view class="island-art" aria-hidden="true"><view class="sun"></view><view class="cloud cloud-a"></view><view class="cloud cloud-b"></view><view class="island"><view class="tree"><view class="tree-crown"></view><view class="tree-trunk"></view></view><view class="house"><view class="door"></view></view><view class="little-path"></view></view><view class="water water-a"></view><view class="water water-b"></view><view class="float-note">慢热，也没关系</view></view>
+  </view>
+  <view wx:if="{{loading}}" class="empty">正在为你准备小岛…</view>
+  <view wx:if="{{error}}" class="error">{{error}}<button class="ghost" bindtap="load">重新连接</button></view>
+  <block wx:if="{{me}}">
+    <view class="card agent-card">
+      <view class="row"><view class="flex"><view class="avatar">{{ownAvatar}}</view><view><view class="section-title agent-name">{{me.profile.adultConfirmed ? me.agent.name : '还没有自己的 Agent'}}</view><view class="small muted">{{me.matchingEnabled ? '正在等待合适的相遇' : '在小岛上安静休息'}}</view></view></view><button class="link" bindtap="editAgent">编辑 ›</button></view>
+      <view class="notice">{{agentModeLabel}} · 当前默认 {{defaultModeLabel}}</view><view class="agent-summary">{{me.agent.summary || '花两分钟告诉我你的兴趣和边界，创建一个懂你的 Agent。'}}</view>
+      <view class="tag-list"><text class="tag" wx:for="{{me.agent.tags}}" wx:key="*this">{{item}}</text></view>
+      <button class="primary" bindtap="startMatch" loading="{{busy}}" disabled="{{busy}}">{{busy ? 'Agent 正在交流，请稍候…' : me.profile.adultConfirmed ? '让我的 Agent 去交朋友  ↗' : '创建我的专属 Agent  ↗'}}</button>
+      <view class="notice center">只交换你授权的资料 · 最多 3 轮交流</view>
+      <button wx:if="{{me.matchingEnabled}}" class="link pause" bindtap="pauseMatching">今天先休息一下，暂停匹配</button>
+    </view>
+    <view wx:if="{{latest}}" class="card" bindtap="viewLatest"><view class="row"><view><view class="eyebrow">最近的一次相遇</view><view class="section-title latest-title">{{latest.other.avatarSymbol}} 你和 {{latest.other.nickname}}</view></view><text class="pill">{{latest.statusText}}</text></view><view class="small muted">看看你们的共同兴趣与推荐话题 <text>›</text></view></view>
+  </block>
+  <view class="section-title how-title">在这里，认识一个人可以很轻</view>
+  <view class="how-row"><text class="step">01</text><view><view>先让 Agent 聊一聊</view><view class="small muted">从共同兴趣开始，探索适合的话题</view></view></view>
+  <view class="how-row"><text class="step peach-step">02</text><view><view>读一份温柔的缘分报告</view><view class="small muted">看看相似与不同，再慢慢决定</view></view></view>
+  <view class="how-row"><text class="step">03</text><view><view>双方都愿意，再说声你好</view><view class="small muted">每一步，你都可以选择自己的节奏</view></view></view>
+  <view class="footer-note">不用成为社交达人，做你自己就好。</view>
+  <island-nav active="home"/>
+</view>

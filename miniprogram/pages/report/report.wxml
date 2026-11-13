@@ -1,0 +1,20 @@
+<view class="page">
+  <view class="eyebrow">A POSSIBILITY, NOT A PROMISE</view><view class="title">一份相遇的小纸条。</view><view class="subtitle"><view>没有满分的匹配，</view><view>只有值得慢慢了解的可能。</view></view>
+  <view wx:if="{{loading}}" class="empty">正在取回这次相遇…</view>
+  <view wx:if="{{error}}" class="error">{{error}}<button class="ghost" bindtap="load">重新获取</button></view>
+  <view wx:if="{{!loading &amp;&amp; !match &amp;&amp; !error}}" class="card empty"><view>还没有缘分报告</view><button class="secondary" bindtap="home">让 Agent 出去认识朋友</button></view>
+  <block wx:if="{{match}}">
+    <view class="report-cover"><view class="report-symbol">{{match.other.avatarSymbol}}</view><view class="section-title">你 &amp; {{match.other.nickname}}</view><text class="pill">{{match.statusText}}</text><view class="tag-list"><text class="tag coral" wx:for="{{match.other.interests}}" wx:key="*this">{{item}}</text></view></view>
+    <view class="ai-note">{{match.modeLabel}} · 推测报告 · 仅供认识彼此时参考，不代表真实交流，也不保证合适。</view>
+    <block wx:if="{{match.report}}">
+      <view class="card"><view class="section-title"><text class="report-icon">♧</text>你们的共同兴趣</view><view wx:if="{{match.report.commonInterests.length}}" class="tag-list"><text class="tag" wx:for="{{match.report.commonInterests}}" wx:key="*this">{{item}}</text></view><view wx:else class="small muted">共同兴趣还不明显，可以从彼此的好奇开始。</view></view>
+      <view class="card"><view class="section-title"><text class="report-icon">◌</text>可能舒服的相处方式</view><view class="muted prewrap">{{match.report.compatibility}}</view></view>
+      <view class="card"><view class="section-title"><text class="report-icon peach-text">☀</text>还值得了解的不同</view><view class="muted prewrap">{{match.report.differences}}</view></view>
+      <view class="card mint"><view class="section-title">可以从这些小话题开始</view><view class="topic" wx:for="{{match.report.topics}}" wx:key="*this"><text class="topic-dot">·</text>{{item}}</view></view>
+    </block>
+    <view wx:if="{{match.status === 'ready' || match.status === 'waiting'}}" class="decision-card"><view class="section-title">愿意慢慢认识 TA 吗？</view><view class="small muted">只有你们都点击同意，才会开启真人聊天。</view><view class="actions"><button class="ghost" data-decision="decline" bindtap="decide" disabled="{{busy}}">这次先不了</button><button class="primary" data-decision="accept" bindtap="decide" loading="{{busy}}" disabled="{{busy || match.selfDecision === 'accept'}}">{{match.selfDecision === 'accept' ? '已表达意向' : '想认识 TA'}}</button></view><view wx:if="{{match.selfDecision === 'accept'}}" class="notice">你的意向已送达。等待对方自主选择，不需要催促。</view></view>
+    <view wx:elif="{{match.status === 'connected'}}" class="decision-card"><view class="section-title">你们都愿意说声你好。</view><view class="small muted">真实的连接，现在交给你们自己。</view><button class="primary" bindtap="chat">去和 TA 聊聊</button></view>
+    <view wx:else class="card empty">这次相遇已结束。谢谢你认真做了选择。<button class="secondary" bindtap="home">回到我的小岛</button></view>
+    <button class="link transcript-link" bindtap="conversation">回看 Agent 模拟交流 ›</button>
+  </block>
+</view>
